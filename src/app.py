@@ -217,6 +217,14 @@ que les dossiers et le chiffre d'affaires sont bien remontés dans PBI.
 # Helpers I/O
 # ---------------------------------------------------------------------------
 
+def _buffer_from_upload(uploaded_file: Any) -> io.BytesIO:
+    """Lit un fichier uploadé puis renvoie un buffer mémoire."""
+    uploaded_file.seek(0)
+    buffer = io.BytesIO(uploaded_file.read())
+    buffer.seek(0)
+    return buffer
+
+
 def _read_excel(file: Any, sheet_name: str, header_row: int = 0) -> pd.DataFrame:
     return pd.read_excel(file, sheet_name=sheet_name, dtype=object, header=header_row)
 
@@ -506,14 +514,19 @@ def run() -> None:
         st.info("Charge les deux fichiers dans la barre latérale pour démarrer.")
         st.stop()
 
+    orx_buffer = _buffer_from_upload(orx_file)
+    pbi_buffer = _buffer_from_upload(pbi_file)
+
     col1, col2 = st.columns(2)
     with col1:
-        orx_sheet = st.selectbox("Feuille ORX", _list_sheets(orx_file), index=0)
+        orx_sheet = st.selectbox("Feuille ORX", _list_sheets(orx_buffer), index=0)
     with col2:
-        pbi_sheet = st.selectbox("Feuille PBI", _list_sheets(pbi_file), index=0)
+        pbi_sheet = st.selectbox("Feuille PBI", _list_sheets(pbi_buffer), index=0)
 
-    df_orx = _read_excel(orx_file, orx_sheet, header_row=int(orx_header_excel) - 1)
-    df_pbi = _read_excel(pbi_file, pbi_sheet, header_row=int(pbi_header_excel) - 1)
+    orx_buffer.seek(0)
+    pbi_buffer.seek(0)
+    df_orx = _read_excel(orx_buffer, orx_sheet, header_row=int(orx_header_excel) - 1)
+    df_pbi = _read_excel(pbi_buffer, pbi_sheet, header_row=int(pbi_header_excel) - 1)
 
     st.caption(f"ORX : {len(df_orx):,} lignes × {len(df_orx.columns)} colonnes  •  "
                f"PBI : {len(df_pbi):,} lignes × {len(df_pbi.columns)} colonnes")

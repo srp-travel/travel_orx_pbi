@@ -28,3 +28,24 @@ streamlit run main.py
 - pandas
 - openpyxl
 - xlsxwriter
+
+## Déploiement sur Streamlit Cloud
+
+1. Pousse le dépôt sur GitHub si ce n'est pas déjà fait :
+
+```powershell
+git add .
+git commit -m "Prépare le projet pour Streamlit Cloud"
+git push origin main
+```
+
+2. Va sur https://share.streamlit.io
+3. Connecte-toi avec ton compte GitHub
+4. Clique sur "New app" et choisis :
+   - GitHub repo : `srp-travel/travel_orx_pbi`
+   - Branch : `main`
+   - File path : `main.py`
+
+5. Lance le déploiement. Streamlit Cloud utilisera automatiquement `requirements.txt`.
+
+> `main.py` est déjà configuré comme point d'entrée et le projet lit les fichiers uploadés uniquement en mémoire.
