@@ -22,6 +22,23 @@ pip install -r requirements.txt
 streamlit run main.py
 ```
 
+## Champs requis dans l'export PowerBI
+
+Pour lancer la comparaison, l'export PBI doit contenir les 5 champs suivants
+(les en-têtes peuvent être remappés dans l'application) :
+
+| Rôle | En-tête attendu par défaut |
+|---|---|
+| Identifiant dossier | `Order id (supplier)` |
+| Vente | `Sale id` |
+| Statut | `Booking state` |
+| Chiffre d'affaires TTC | `€ turnover (inc. VAT)` |
+| Date | `Date` |
+
+Les colonnes `Tour Operator`, `Product` et `Product id` sont facultatives.
+Elles enrichissent le rapport, notamment le contrôle du Tour Opérateur manquant
+et le détail des dossiers PBI mal intégrés.
+
 ## Dépendances
 
 - streamlit

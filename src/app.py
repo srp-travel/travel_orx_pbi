@@ -180,11 +180,30 @@ que les dossiers et le chiffre d'affaires sont bien remontés dans PBI.
 1. **Charger les deux fichiers Excel** dans la barre latérale gauche
    _(Orchestra `detailedSearchExport*.xlsx` et l'export PowerBI)._
 2. **Vérifier le mapping des colonnes** — les noms par défaut sont
-   pré-remplis ; modifie uniquement si tes en-têtes diffèrent.
+    pré-remplis ; modifie uniquement si tes en-têtes diffèrent. Pour PBI,
+    l'export doit contenir les 5 champs obligatoires listés ci-dessous.
 3. **Contrôler la cohérence des dates** — l'outil affiche les périodes
    couvertes par chaque fichier et bloque la comparaison en cas
    d'incohérence (override possible).
 4. **Cliquer sur _Lancer la comparaison_** pour obtenir le rapport.
+
+##### Champs à inclure dans l'export PowerBI
+
+Les 5 champs suivants sont nécessaires à la comparaison. Le mapping dans
+l'application permet de les associer à des en-têtes différents si besoin :
+
+| Rôle | En-tête PBI attendu par défaut | Utilisation |
+|---|---|---|
+| Identifiant dossier | `Order id (supplier)` | rapprochement des dossiers ORX et PBI |
+| Vente | `Sale id` | comparaison et regroupement par vente |
+| Statut | `Booking state` | comparaison et regroupement par statut |
+| Chiffre d'affaires | `€ turnover (inc. VAT)` | comparaison du CA total et contrôle des prix |
+| Date | `Date` | contrôle du recouvrement des périodes |
+
+Les champs `Tour Operator`, `Product` et `Product id` sont facultatifs. Ils
+enrichissent le rapport et permettent notamment de repérer les dossiers PBI
+dont le Tour Opérateur est manquant ; `Product` et `Product id` sont conservés
+dans l'onglet des dossiers mal intégrés lorsqu'ils sont présents.
 
 ##### Ce que tu obtiens
 
